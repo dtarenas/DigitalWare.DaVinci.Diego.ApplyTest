@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31129.286
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Core", "1. Core", "{94A2E09C-5462-41A2-8253-495B1917BBBB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. DAL", "2. DAL", "{F2EFEB39-EA93-4861-9D14-E8BB502710BB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. BL", "3. BL", "{A402383B-030C-40D6-914C-C26A8329AA6F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Presentation", "4. Presentation", "{8B09E425-E972-4BF1-84B0-FE98412D6BC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalWare.DaVinci.Diego.ApplyTest.Core", "DigitalWare.DaVinci.Diego.ApplyTest.Core\DigitalWare.DaVinci.Diego.ApplyTest.Core.csproj", "{E2AD03DA-DF26-4973-BBD8-3A03D24A2551}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalWare.DaVinci.Diego.ApplyTest.DAL", "DigitalWare.DaVinci.Diego.ApplyTest.DAL\DigitalWare.DaVinci.Diego.ApplyTest.DAL.csproj", "{51CFC7D3-BEC0-438D-BCFF-39C0DF378D2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalWare.DaVinci.Diego.ApplyTest.BL", "DigitalWare.DaVinci.Diego.ApplyTest.BL\DigitalWare.DaVinci.Diego.ApplyTest.BL.csproj", "{40BC0106-CFC9-4247-9894-483C827E8A19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalWare.DaVinci.Diego.ApplyTest.Presentation", "DigitalWare.DaVinci.Diego.ApplyTest.Presentation\DigitalWare.DaVinci.Diego.ApplyTest.Presentation.csproj", "{208D99C6-CD2C-44D8-9386-A22C925C709E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2AD03DA-DF26-4973-BBD8-3A03D24A2551}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2AD03DA-DF26-4973-BBD8-3A03D24A2551}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2AD03DA-DF26-4973-BBD8-3A03D24A2551}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2AD03DA-DF26-4973-BBD8-3A03D24A2551}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51CFC7D3-BEC0-438D-BCFF-39C0DF378D2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51CFC7D3-BEC0-438D-BCFF-39C0DF378D2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51CFC7D3-BEC0-438D-BCFF-39C0DF378D2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51CFC7D3-BEC0-438D-BCFF-39C0DF378D2A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40BC0106-CFC9-4247-9894-483C827E8A19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40BC0106-CFC9-4247-9894-483C827E8A19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40BC0106-CFC9-4247-9894-483C827E8A19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40BC0106-CFC9-4247-9894-483C827E8A19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{208D99C6-CD2C-44D8-9386-A22C925C709E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{208D99C6-CD2C-44D8-9386-A22C925C709E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{208D99C6-CD2C-44D8-9386-A22C925C709E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{208D99C6-CD2C-44D8-9386-A22C925C709E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E2AD03DA-DF26-4973-BBD8-3A03D24A2551} = {94A2E09C-5462-41A2-8253-495B1917BBBB}
+		{51CFC7D3-BEC0-438D-BCFF-39C0DF378D2A} = {F2EFEB39-EA93-4861-9D14-E8BB502710BB}
+		{40BC0106-CFC9-4247-9894-483C827E8A19} = {A402383B-030C-40D6-914C-C26A8329AA6F}
+		{208D99C6-CD2C-44D8-9386-A22C925C709E} = {8B09E425-E972-4BF1-84B0-FE98412D6BC8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91094B1E-B023-4378-AF96-874974932A90}
+	EndGlobalSection
+EndGlobal
