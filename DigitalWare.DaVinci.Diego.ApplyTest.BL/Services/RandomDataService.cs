@@ -196,9 +196,8 @@
         private static DateTime RandomDate(int startYear = 2000, int startMonth = 1, int startDay = 1)
         {
             var random = new Random();
-            DateTime start = new DateTime(startYear, startMonth, startDay);
-            int range = (DateTime.Today - start).Days;
-            return start.AddDays(random.Next(range));
+            var start = new DateTime(startYear, startMonth, startDay);
+            return start.AddDays(random.Next(360));
         }
     }
 }

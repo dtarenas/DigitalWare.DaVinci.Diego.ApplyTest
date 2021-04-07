@@ -69,7 +69,7 @@
 
             var customersDto = await this._customerRepo.Get().Include(x => x.Invoices).Where(
                  x => x.Invoices.Count > 0  ///Que tengan facturas
-                   && (DateTime.UtcNow.Year - x.DateOfBirth.Year) < minAge //Que tengan menos de la edad mínima
+                   && (DateTime.UtcNow.Year - x.DateOfBirth.Year) <= minAge //Que tengan menos de la edad mínima
                    && x.Invoices.Any(x => x.CreatedOn >= purchaseDateFrom.ToUniversalTime() && x.CreatedOn <= purchaseDateTo.ToUniversalTime()) // Filtro por el rango de fechas
                 )
                 .Select(x => new CustomerDTO(x))
