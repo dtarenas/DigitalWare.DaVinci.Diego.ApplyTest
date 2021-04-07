@@ -2,6 +2,7 @@
 {
     using DigitalWare.DaVinci.Diego.ApplyTest.BL.Services.Facades;
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.DTOs;
+    using DigitalWare.DaVinci.Diego.ApplyTest.Core.DTOs.Queries;
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.DTOs.Responses;
     using Microsoft.AspNetCore.Mvc;
     using System.Collections.Generic;
@@ -56,6 +57,43 @@
         public async Task<IActionResult> GetById([FromQuery] int id)
         {
             return this.Ok(await this._productServiceBL.GetAsync(id));
+        }
+
+        /// <summary>
+        /// Gets the prices.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Response DTO</returns>
+        [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(WebApiResponseDTO<List<ProductPricesDTO>>))]
+        public async Task<IActionResult> GetPrices([FromQuery] int? id)
+        {
+            return this.Ok(await this._productServiceBL.GetPricesAsync(id));
+        }
+
+        /// <summary>
+        /// Gets the by minimal stock.
+        /// </summary>
+        /// <param name="minStock">The identifier.</param>
+        /// <returns>Response DTO</returns>
+        [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(WebApiResponseDTO<List<ProductDTO>>))]
+        public async Task<IActionResult> GetByMinimalStock([FromQuery] int? minStock)
+        {
+            return this.Ok(await this._productServiceBL.GetByMinimalStock(minStock));
+        }
+
+        /// <summary>
+        /// Gets the total sold.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="year">The year.</param>
+        /// <returns></returns>
+        [HttpGet]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(WebApiResponseDTO<List<ProductTotalAmountSoldDTO>>))]
+        public async Task<IActionResult> GetTotalSold([FromQuery] int? id, [FromQuery] int? year = 2000)
+        {
+            return this.Ok(await this._productServiceBL.GetTotalAmountSoldAsync(id, year));
         }
 
         /// <summary>

@@ -1,6 +1,7 @@
 ﻿namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.DTOs
 {
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.Enumerations;
+    using DigitalWare.DaVinci.Diego.ApplyTest.Core.Models;
     using System;
     using System.ComponentModel.DataAnnotations;
 
@@ -9,6 +10,27 @@
     /// </summary>
     public class CustomerDTO
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomerDTO"/> class.
+        /// </summary>
+        public CustomerDTO()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CustomerDTO"/> class.
+        /// </summary>
+        /// <param name="customer">The customer.</param>
+        public CustomerDTO(Customer customer)
+        {
+            FullName = customer.FullName;
+            Email = customer.Email;
+            Phone = customer.Phone;
+            IDType = customer.IdType;
+            IDNumber = customer.IdNumber;
+            DateOfBirth = customer.DateOfBirth;
+        }
+
         /// <summary>
         /// Gets or sets the full name.
         /// </summary>
@@ -68,6 +90,24 @@
         /// </value>
         [Display(Name = "Fecha de nacimiento")]
         [Required(ErrorMessage = "{0} es obligatorio")]
+        [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
+
+        /// <summary>
+        /// Gets the date of birth local.
+        /// </summary>
+        /// <value>
+        /// The date of birth local.
+        /// </value>
+        public DateTime DateOfBirthLocal => this.DateOfBirth.ToLocalTime();
+
+        /// <summary>
+        /// Gets the age.
+        /// </summary>
+        /// <value>
+        /// The age.
+        /// </value>
+        [Display(Name = "Edad")]
+        public int Age => DateTime.UtcNow.Year - DateOfBirth.Year;
     }
 }

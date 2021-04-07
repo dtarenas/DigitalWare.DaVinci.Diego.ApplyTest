@@ -35,13 +35,6 @@
         Task<WebApiResponseDTO<InvoiceDTO>> CreateAsync(InvoiceDTO productDTO);
 
         /// <summary>
-        /// Creates the asynchronous.
-        /// </summary>
-        /// <param name="productDTOs">The product dt os.</param>
-        /// <returns>List of Product DTO</returns>
-        Task<WebApiResponseDTO<List<InvoiceDTO>>> CreateAsync(List<InvoiceDTO> productDTOs);
-
-        /// <summary>
         /// Updates the asynchronous.
         /// </summary>
         /// <param name="productId">The product identifier.</param>

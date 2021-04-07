@@ -121,5 +121,14 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
         /// </value>
         [Display(Name = "Nombre completo")]
         public string FullName => $"{this.FirstName} {this.LastName}";
+
+        /// <summary>
+        /// Gets the age.
+        /// </summary>
+        /// <value>
+        /// The age.
+        /// </value>
+        [Display(Name = "Edad")]
+        public int Age => DateTime.UtcNow.Year - DateOfBirth.Year;
     }
 }

@@ -14,12 +14,10 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Presentation
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.OpenApi.Models;
-    using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Net;
-    using System.Reflection;
+    using System.Text.Json.Serialization;
     using Unchase.Swashbuckle.AspNetCore.Extensions.Extensions;
 
     /// <summary>
@@ -50,7 +48,9 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Presentation
         /// <param name="services">The services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers(options => options.Filters.Add<GlobalExceptionFilter>());
+            services.AddControllers(options => options.Filters.Add<GlobalExceptionFilter>())
+                .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()))
+                .AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             ////Set data access connections
             services.AddDbContext<DigitalWareDavinCiInvoiceSystemContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DaVinciInvoiceSystem")));
@@ -58,6 +58,9 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Presentation
             services.AddScoped(typeof(IBaseRepo<>), typeof(BaseRepo<>));
             ////BL Services
             services.AddScoped<IProductServiceBL, ProductServiceBL>();
+            services.AddScoped<IInvoiceServiceBL, InvoiceServiceBL>();
+            services.AddScoped<IRandomDataService, RandomDataService>();
+            services.AddScoped<ICustomerServiceBL, CustomerServiceBL>();
 
             ////Model State Result (For API Controller)
             services.Configure<ApiBehaviorOptions>(options =>

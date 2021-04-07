@@ -8,6 +8,7 @@
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.Models;
     using DigitalWare.DaVinci.Diego.ApplyTest.DAL.Repositories;
     using Microsoft.EntityFrameworkCore;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -40,9 +41,25 @@
         /// <returns>
         /// Invoice DTO
         /// </returns>
+        /// <exception cref="BLException">Consecutivo no se puede usar</exception>
         public async Task<WebApiResponseDTO<InvoiceDTO>> CreateAsync(InvoiceDTO invoiceDTO)
         {
             var invoice = new Invoice(invoiceDTO);
+            if (await this._invoiceRepo.Get().AnyAsync(x => x.Consecutive == invoiceDTO.Consecutive))
+            {
+                throw new BLException("Consecutivo no se puede usar");
+            }
+
+            if (invoiceDTO.Customer.DateOfBirth > DateTime.UtcNow)
+            {
+                throw new BLException("Fecha de nacimiento no es válida");
+            }
+
+            if (invoiceDTO.TotalAmount != invoiceDTO.InvoiceDetails.Sum(x => x.ItemPrice))
+            {
+                throw new BLException("Monto total Vs sumatoria del detalle no coinciden");
+            }
+
             await this._invoiceRepo.AddAsync(invoice);
             await this._invoiceRepo.SaveChangesAsync();
             invoiceDTO.InvoiceId = invoice.InvoiceId;
@@ -52,27 +69,6 @@
                 IsSuccess = true,
                 Message = Constants.OkMessage,
                 ObjResult = invoiceDTO
-            };
-        }
-
-        /// <summary>
-        /// Creates the asynchronous.
-        /// </summary>
-        /// <param name="invoiceDTOs">The invoice dt os.</param>
-        /// <returns>
-        /// List of Invoice DTO
-        /// </returns>
-        public async Task<WebApiResponseDTO<List<InvoiceDTO>>> CreateAsync(List<InvoiceDTO> invoiceDTOs)
-        {
-            var invoices = invoiceDTOs.Select(x => new Invoice(x));
-            await this._invoiceRepo.AddAsync(invoices);
-            await this._invoiceRepo.SaveChangesAsync();
-            return new WebApiResponseDTO<List<InvoiceDTO>>()
-            {
-                HttpStatusCode = HttpStatusCode.OK,
-                IsSuccess = true,
-                Message = Constants.OkMessage,
-                ObjResult = invoiceDTOs
             };
         }
 
@@ -110,7 +106,7 @@
         /// </returns>
         public async Task<WebApiResponseDTO<List<InvoiceDTO>>> GetAsync()
         {
-            var invoices = await this._invoiceRepo.Get().Select(x => new InvoiceDTO(x)).ToListAsync();
+            var invoices = await this._invoiceRepo.Get().Include(x => x.Customer).Include(x => x.InvoiceDetails).Select(x => new InvoiceDTO(x)).ToListAsync();
             return new WebApiResponseDTO<List<InvoiceDTO>>()
             {
                 HttpStatusCode = HttpStatusCode.OK,
@@ -191,7 +187,7 @@
         private static void SetNewValuesForInvoice(InvoiceDTO invoiceDTO, Invoice invoice)
         {
             invoice.InvoiceId = invoiceDTO.InvoiceId;
-            invoice.Consecutive = invoiceDTO.Consecutive;
+            invoice.Consecutive = invoiceDTO.Consecutive ?? Guid.NewGuid();
             invoice.TotalAmount = invoiceDTO.TotalAmount;
             invoice.PaymentWay = invoiceDTO.PaymentWay;
             invoice.CreatedOn = invoiceDTO.CreatedOn;

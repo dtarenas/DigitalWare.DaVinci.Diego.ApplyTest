@@ -32,7 +32,7 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
         public Invoice(InvoiceDTO invoiceDTO)
         {
             InvoiceId = invoiceDTO.InvoiceId;
-            Consecutive = invoiceDTO.Consecutive;
+            Consecutive = invoiceDTO.Consecutive ?? Guid.NewGuid();
             TotalAmount = invoiceDTO.TotalAmount;
             PaymentWay = invoiceDTO.PaymentWay;
             CreatedOn = invoiceDTO.CreatedOn;
@@ -56,7 +56,7 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
                 Quantity = invoiceDTOInvoiceDetail.Quantity,
                 ItemPrice = invoiceDTOInvoiceDetail.ItemPrice,
                 Notes = invoiceDTOInvoiceDetail.Notes,
-                Status = Status.Enable
+                Status = Status.Enable,
             });
             Status = invoiceDTO.Status;
         }

@@ -33,12 +33,12 @@
                 Phone = invoice.Customer.Phone,
                 IDType = invoice.Customer.IdType,
                 IDNumber = invoice.Customer.IdNumber,
-                DateOfBirth = invoice.Customer.DateOfBirth
+                DateOfBirth = invoice.Customer.DateOfBirth.ToUniversalTime()
             };
             Consecutive = invoice.Consecutive;
             TotalAmount = invoice.TotalAmount;
             PaymentWay = invoice.PaymentWay;
-            CreatedOn = invoice.CreatedOn;
+            CreatedOn = invoice.CreatedOn.ToUniversalTime();
             Notes = invoice.Notes;
             InvoiceStatus = invoice.InvoiceStatus;
             Seller = invoice.Seller;
@@ -78,7 +78,7 @@
         /// The consecutive.
         /// </value>
         [Display(Name = "Consecutivo")]
-        public Guid Consecutive { get; set; } = Guid.NewGuid();
+        public Guid? Consecutive { get; set; } = Guid.NewGuid();
 
         /// <summary>
         /// Gets or sets the total amount.
@@ -157,5 +157,13 @@
         /// </value>
         [Display(Name = "Detalle de factura")]
         public List<InvoiceDetailsDTO> InvoiceDetails { get; set; }
+
+        /// <summary>
+        /// Gets the created on local.
+        /// </summary>
+        /// <value>
+        /// The created on local.
+        /// </value>
+        public DateTime CreatedOnLocal => this.CreatedOn.ToLocalTime();
     }
 }

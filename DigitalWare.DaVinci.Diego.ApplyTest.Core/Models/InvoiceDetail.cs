@@ -2,7 +2,6 @@
 
 namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
 {
-    using DigitalWare.DaVinci.Diego.ApplyTest.Core.Enumerations;
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.Models.Base;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;

@@ -4,10 +4,12 @@
     using DigitalWare.DaVinci.Diego.ApplyTest.BL.Services.Facades;
     using DigitalWare.DaVinci.Diego.ApplyTest.BL.Utils;
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.DTOs;
+    using DigitalWare.DaVinci.Diego.ApplyTest.Core.DTOs.Queries;
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.DTOs.Responses;
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.Models;
     using DigitalWare.DaVinci.Diego.ApplyTest.DAL.Repositories;
     using Microsoft.EntityFrameworkCore;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
@@ -52,27 +54,6 @@
                 IsSuccess = true,
                 Message = Constants.OkMessage,
                 ObjResult = productDTO
-            };
-        }
-
-        /// <summary>
-        /// Creates the asynchronous.
-        /// </summary>
-        /// <param name="productDTOs">The product dt os.</param>
-        /// <returns>
-        /// List of Product DTO
-        /// </returns>
-        public async Task<WebApiResponseDTO<List<ProductDTO>>> CreateAsync(List<ProductDTO> productDTOs)
-        {
-            var products = productDTOs.Select(x => new Product(x));
-            await this._productRepo.AddAsync(products);
-            await this._productRepo.SaveChangesAsync();
-            return new WebApiResponseDTO<List<ProductDTO>>()
-            {
-                HttpStatusCode = HttpStatusCode.OK,
-                IsSuccess = true,
-                Message = Constants.OkMessage,
-                ObjResult = productDTOs
             };
         }
 
@@ -141,6 +122,107 @@
                 IsSuccess = true,
                 Message = Constants.OkMessage,
                 ObjResult = new ProductDTO(product)
+            };
+        }
+
+        /// <summary>
+        /// Gets the by minimal stock.
+        /// </summary>
+        /// <param name="minStock">The minimum stock.</param>
+        /// <returns>
+        /// List of product DTO
+        /// </returns>
+        /// <exception cref="BLException">No hay productos disponibles</exception>
+        public async Task<WebApiResponseDTO<List<ProductDTO>>> GetByMinimalStock(int? minStock = 5)
+        {
+            if (!await this._productRepo.Get().AnyAsync())
+            {
+                throw new BLException("No hay productos disponibles");
+            }
+
+            var products = await this._productRepo.Get().Where(x => x.Stock >= minStock).Select(x => new ProductDTO(x)).ToListAsync();
+            return new WebApiResponseDTO<List<ProductDTO>>()
+            {
+                HttpStatusCode = HttpStatusCode.OK,
+                IsSuccess = true,
+                Message = Constants.OkMessage,
+                ObjResult = products
+            };
+        }
+
+        /// <summary>
+        /// Gets the prices asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>
+        /// List of product prices
+        /// </returns>
+        /// <exception cref="BLException">No hay productos disponibles</exception>
+        public async Task<WebApiResponseDTO<List<ProductPricesDTO>>> GetPricesAsync(int? id)
+        {
+            if (!await this._productRepo.Get().AnyAsync())
+            {
+                throw new BLException("No hay productos disponibles");
+            }
+
+            var productPricesDto = await this._productRepo.Get().Where(x => x.Stock >= 5 && x.ProductId == (id ?? x.ProductId)).Select(x => new ProductPricesDTO()
+            {
+                Name = x.Description,
+                Price = x.SalesPrice,
+                ProductId = x.ProductId
+            }).ToListAsync();
+
+            return new WebApiResponseDTO<List<ProductPricesDTO>>()
+            {
+                HttpStatusCode = HttpStatusCode.OK,
+                IsSuccess = true,
+                Message = Constants.OkMessage,
+                ObjResult = productPricesDto
+            };
+        }
+
+        /// <summary>
+        /// Gets the total amount sold asynchronous.
+        /// </summary>
+        /// <param name="productId">The product identifier.</param>
+        /// <param name="year">The year.</param>
+        /// <returns>
+        /// List of totals
+        /// </returns>
+        /// <exception cref="BLException">Año no permitido</exception>
+        public async Task<WebApiResponseDTO<List<ProductTotalAmountSoldDTO>>> GetTotalAmountSoldAsync(int? productId, int? year = 2000)
+        {
+            if (year > DateTime.UtcNow.Year)
+            {
+                throw new BLException("Año no permitido");
+            }
+
+            ////Obtengo todos los productos
+            var products = await this._productRepo.Get()
+                .Include(x => x.InvoiceDetails)
+                .ThenInclude(x => x.Invoice)
+                .Where(x => x.ProductId == (productId ?? x.ProductId))
+                .ToListAsync();
+
+            if (products.Count == 0)
+            {
+                throw new BLException("Producto no existe");
+            }
+
+            ////Obtengo totales
+            var totalSoldDto = products.SelectMany(x => x.InvoiceDetails).Where(x => x.Invoice.CreatedOn.Year == year).GroupBy(x => x.ProductId).Select(x => new ProductTotalAmountSoldDTO()
+            {
+               ProductId = x.Key,
+               TotalAmountSold = x.Sum(x => x.ItemPrice * x.Quantity),
+               Description = x.First().Product.Description
+            }).ToList();
+
+            return new WebApiResponseDTO<List<ProductTotalAmountSoldDTO>>()
+            {
+                HttpStatusCode = HttpStatusCode.OK,
+                IsSuccess = true,
+                Message = Constants.OkMessage,
+                ObjResult = totalSoldDto
             };
         }
 
