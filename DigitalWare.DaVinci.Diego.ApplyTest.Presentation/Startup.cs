@@ -1,7 +1,9 @@
 namespace DigitalWare.DaVinci.Diego.ApplyTest.Presentation
 {
+    using DigitalWare.DaVinci.Diego.ApplyTest.DAL.EFDatabaseContext;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -35,8 +37,11 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Presentation
         /// <param name="services">The services.</param>
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+
+            ////Set data access connections
+            services.AddDbContext<DigitalWareDavinCiInvoiceSystemContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DaVinciInvoiceSystem")));
+            ////Configure swagger doc
             services.AddSwaggerGen(c => c.SwaggerDoc("v1", new OpenApiInfo { Title = "DigitalWare DaVinci Diego Apply Test", Version = "v1" }));
         }
 
