@@ -80,7 +80,7 @@
         /// Deletes the asynchronous.
         /// </summary>
         /// <param name="productId">The product identifier.</param>
-        /// <returns></returns>
+        /// <returns>Result DTO</returns>
         /// <exception cref="DigitalWare.DaVinci.Diego.ApplyTest.BL.Exceptions.BLException">Producto no encontrado</exception>
         public async Task<WebApiResponseDTO<object>> DeleteAsync(int productId)
         {

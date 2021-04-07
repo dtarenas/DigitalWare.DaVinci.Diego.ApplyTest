@@ -1,6 +1,7 @@
 ﻿#nullable disable
 namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
 {
+    using DigitalWare.DaVinci.Diego.ApplyTest.Core.Enumerations;
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.Models.Base;
     using System;
     using System.Collections.Generic;
@@ -81,7 +82,7 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
         /// The type of the identifier.
         /// </value>
         [Column("id_type")]
-        public byte IdType { get; set; }
+        public IDTypes IdType { get; set; }
 
         /// <summary>
         /// Gets or sets the identifier number.
@@ -111,5 +112,14 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
         /// </value>
         [InverseProperty(nameof(Invoice.Customer))]
         public virtual ICollection<Invoice> Invoices { get; set; }
+
+        /// <summary>
+        /// Gets the full name.
+        /// </summary>
+        /// <value>
+        /// The full name.
+        /// </value>
+        [Display(Name = "Nombre completo")]
+        public string FullName => $"{this.FirstName} {this.LastName}";
     }
 }

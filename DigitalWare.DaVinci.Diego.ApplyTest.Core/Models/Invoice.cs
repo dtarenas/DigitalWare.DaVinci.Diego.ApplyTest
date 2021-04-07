@@ -2,6 +2,7 @@
 
 namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
 {
+    using DigitalWare.DaVinci.Diego.ApplyTest.Core.DTOs;
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.Enumerations;
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.Models.Base;
     using System;
@@ -22,6 +23,42 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
         public Invoice()
         {
             this.InvoiceDetails = new HashSet<InvoiceDetail>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Invoice"/> class.
+        /// </summary>
+        /// <param name="invoiceDTO">The invoice dto.</param>
+        public Invoice(InvoiceDTO invoiceDTO)
+        {
+            InvoiceId = invoiceDTO.InvoiceId;
+            Consecutive = invoiceDTO.Consecutive;
+            TotalAmount = invoiceDTO.TotalAmount;
+            PaymentWay = invoiceDTO.PaymentWay;
+            CreatedOn = invoiceDTO.CreatedOn;
+            Notes = invoiceDTO.Notes;
+            InvoiceStatus = invoiceDTO.InvoiceStatus;
+            Seller = invoiceDTO.Seller;
+            Customer = new Customer
+            {
+                Email = invoiceDTO.Customer.Email,
+                Phone = invoiceDTO.Customer.Phone,
+                IdType = invoiceDTO.Customer.IDType,
+                IdNumber = invoiceDTO.Customer.IDNumber,
+                DateOfBirth = invoiceDTO.Customer.DateOfBirth,
+                FirstName = invoiceDTO.Customer.FullName,
+                Status = Status.Enable
+            };
+            InvoiceDetails = invoiceDTO.InvoiceDetails.ConvertAll(invoiceDTOInvoiceDetail => new InvoiceDetail
+            {
+                InvoiceDetailId = invoiceDTOInvoiceDetail.InvoiceDetailId,
+                ProductId = invoiceDTOInvoiceDetail.ProductId,
+                Quantity = invoiceDTOInvoiceDetail.Quantity,
+                ItemPrice = invoiceDTOInvoiceDetail.ItemPrice,
+                Notes = invoiceDTOInvoiceDetail.Notes,
+                Status = Status.Enable
+            });
+            Status = invoiceDTO.Status;
         }
 
         /// <summary>
@@ -68,7 +105,7 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
         /// The payment way.
         /// </value>
         [Column("payment_way")]
-        public byte PaymentWay { get; set; }
+        public PaymentWays PaymentWay { get; set; }
 
         /// <summary>
         /// Gets or sets the created on.

@@ -3,7 +3,6 @@
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.Enumerations;
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.Models;
     using System.ComponentModel.DataAnnotations;
-    using System.Text.Json.Serialization;
 
     /// <summary>
     /// Product DTO
@@ -48,7 +47,7 @@
         /// The description.
         /// </value>
         [Display(Name = "Descripción")]
-        [StringLength(800)]
+        [StringLength(800, ErrorMessage = "{0} no debe tener más de {1} carácteres")]
         public string Description { get; set; }
 
         /// <summary>
@@ -57,7 +56,7 @@
         /// <value>
         /// The picture URL.
         /// </value>
-        [StringLength(500)]
+        [StringLength(500, ErrorMessage = "{0} no debe tener más de {1} carácteres")]
         [Display(Name = "Url Imagen")]
         public string PictureUrl { get; set; }
 
@@ -68,6 +67,8 @@
         /// The stock.
         /// </value>
         [Display(Name = "Cantidad disponible")]
+        [Required(ErrorMessage = "{0} es obligatorio")]
+        [Range(0, int.MaxValue, ErrorMessage = "{0} no es válido")]
         public int Stock { get; set; }
 
         /// <summary>
@@ -77,6 +78,8 @@
         /// The sales price.
         /// </value>
         [Display(Name = "Precio de venta")]
+        [Required(ErrorMessage = "{0} es obligatorio")]
+        [Range(1, double.MaxValue, ErrorMessage = "{0} no es válido")]
         public decimal SalesPrice { get; set; }
 
         /// <summary>
@@ -86,6 +89,6 @@
         /// The status.
         /// </value>
         [Display(Name = "Estado del registro")]
-        public Status Status { get; set; }
+        public Status Status { get; set; } = Status.Enable;
     }
 }
