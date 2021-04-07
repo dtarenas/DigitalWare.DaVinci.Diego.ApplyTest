@@ -1,6 +1,7 @@
 ﻿#nullable disable
 namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
 {
+    using DigitalWare.DaVinci.Diego.ApplyTest.Core.Models.Base;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -9,8 +10,9 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
     /// <summary>
     /// Customer class entity
     /// </summary>
+    /// <seealso cref="DigitalWare.DaVinci.Diego.ApplyTest.Core.Models.Base.BaseEntity" />
     [Table("customers")]
-    public partial class Customer
+    public partial class Customer : BaseEntity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Customer"/> class.

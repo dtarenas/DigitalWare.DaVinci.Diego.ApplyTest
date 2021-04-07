@@ -2,7 +2,8 @@
 
 namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
 {
-    using DigitalWare.DaVinci.Diego.ApplyTest.Core.Enumerations;
+    using DigitalWare.DaVinci.Diego.ApplyTest.Core.DTOs;
+    using DigitalWare.DaVinci.Diego.ApplyTest.Core.Models.Base;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -10,8 +11,9 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
     /// <summary>
     /// Product Class Entity
     /// </summary>
+    /// <seealso cref="DigitalWare.DaVinci.Diego.ApplyTest.Core.Models.Base.BaseEntity" />
     [Table("products")]
-    public partial class Product
+    public partial class Product : BaseEntity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Product"/> class.
@@ -19,6 +21,20 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
         public Product()
         {
             this.InvoiceDetails = new HashSet<InvoiceDetail>();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Product"/> class.
+        /// </summary>
+        /// <param name="productDTO">The product dto.</param>
+        public Product(ProductDTO productDTO)
+        {
+            ProductId = productDTO.ProductId;
+            Description = productDTO.Description;
+            PictureUrl = productDTO.PictureUrl;
+            Stock = productDTO.Stock;
+            SalesPrice = productDTO.SalesPrice;
+            Status = productDTO.Status;
         }
 
         /// <summary>
@@ -68,15 +84,6 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
         /// </value>
         [Column("sales_price", TypeName = "decimal(18, 2)")]
         public decimal SalesPrice { get; set; }
-
-        /// <summary>
-        /// Gets or sets the status.
-        /// </summary>
-        /// <value>
-        /// The status.
-        /// </value>
-        [Column("status")]
-        public Status Status { get; set; }
 
         /// <summary>
         /// Gets or sets the invoice details.

@@ -3,6 +3,7 @@
 namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
 {
     using DigitalWare.DaVinci.Diego.ApplyTest.Core.Enumerations;
+    using DigitalWare.DaVinci.Diego.ApplyTest.Core.Models.Base;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -11,8 +12,9 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
     /// <summary>
     /// Invoice Class Entity
     /// </summary>
+    /// <seealso cref="DigitalWare.DaVinci.Diego.ApplyTest.Core.Models.Base.BaseEntity" />
     [Table("invoices")]
-    public partial class Invoice
+    public partial class Invoice : BaseEntity
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Invoice"/> class.
@@ -86,15 +88,6 @@ namespace DigitalWare.DaVinci.Diego.ApplyTest.Core.Models
         [Required]
         [Column("notes")]
         public string Notes { get; set; }
-
-        /// <summary>
-        /// Gets or sets the status.
-        /// </summary>
-        /// <value>
-        /// The status.
-        /// </value>
-        [Column("status")]
-        public Status Status { get; set; }
 
         /// <summary>
         /// Gets or sets the invoice status.
