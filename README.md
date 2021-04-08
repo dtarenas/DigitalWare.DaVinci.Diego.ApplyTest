@@ -22,7 +22,7 @@
     <img src="https://user-images.githubusercontent.com/42014718/113943367-2bdba380-97c8-11eb-9be3-d01d330a20ca.png" title="Ejercicio 1" alt="Ejercicio 1" />
   </li>Se expone un <b>API</b> que tiene los métodos CRUD para <i>Productos</i> y <i>Facturas</i>, además de exponer métodos que retornan los resultados del ejercicio anterior. Para acceder a la API, de clic <a href="http://lotesik756-001-site1.ftempurl.com/swagger/index.html" target"_blank" >Aquí</a>
   <br>
-  Un ejemplo de ejecución sería:
+  Un ejemplo de ejecución sería: <br>
   <img src="https://user-images.githubusercontent.com/42014718/113936836-fd58cb00-97bd-11eb-8d8c-08365a697c55.gif" title="Ejercicio 1" alt="Ejercicio 1" />
   </li>
 </ol>
